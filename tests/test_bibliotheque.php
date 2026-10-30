@@ -58,3 +58,45 @@ $l4 = new Livre('9780596007126', 'Algo Avance', 'Cormen');
 $bib->ajouter($l4);
 $res4 = $bib->rechercher('algo');
 verifier(count($res4) === 2, 'rechercher("algo") trouve 2 livres');
+
+// Test : statistiques du catalogue
+$stats = $bib->statistiques();
+
+verifier(
+    $stats['total'] === 4,
+    'statistiques() retourne 4 livres au total'
+);
+
+verifier(
+    $stats['disponibles'] === 4,
+    'statistiques() retourne 4 livres disponibles'
+);
+
+verifier(
+    $stats['empruntes'] === 0,
+    'statistiques() retourne 0 livre emprunte'
+);
+
+// Test : statistiques après emprunt
+$l2->emprunter();
+$l4->emprunter();
+
+$stats = $bib->statistiques();
+
+verifier(
+    $stats['total'] === 4
+    && $stats['disponibles'] === 2
+    && $stats['empruntes'] === 2,
+    'statistiques() actualise les compteurs apres deux emprunts'
+);
+
+// Test : statistiques après restitution
+$l2->rendre();
+
+$stats = $bib->statistiques();
+
+verifier(
+    $stats['disponibles'] === 3
+    && $stats['empruntes'] === 1,
+    'statistiques() actualise les compteurs apres une restitution'
+);
