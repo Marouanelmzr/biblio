@@ -1,0 +1,33 @@
+
+# Historique Git
+.git
+.gitignore
+
+# Workflows et configuration GitHub
+.github
+
+# Journaux
+*.log
+logs/
+log/
+
+# Configurations des editeurs et IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Fichiers temporaires
+tmp/
+temp/
+*.tmp
+*.bak
+
+# Dependances locales et environnements
+vendor/
+node_modules/
+.env
+.env.*
+!.env.example
