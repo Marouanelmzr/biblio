@@ -1,3 +1,4 @@
+
 <?php
 
 /**
@@ -66,13 +67,14 @@ class Bibliotheque
     {
         $total = $this->compter();
         $disponibles = 0;
-    
+
         foreach ($this->livres as $livre) {
-            if ($livre->estDisponible()) {
+            // BUG VOLONTAIRE : condition inversée
+            if (!$livre->estDisponible()) {
                 $disponibles++;
             }
         }
-    
+
         return [
             'total' => $total,
             'disponibles' => $disponibles,
@@ -81,18 +83,23 @@ class Bibliotheque
     }
 
     /**
-     * Recherche des livres par mot-cle dans le titre ou l'auteur (insensible a la casse).
+     * Recherche des livres par mot-cle dans le titre ou l'auteur
+     * (insensible a la casse).
      * @return Livre[]
      */
     public function rechercher(string $mot): array
     {
         $resultats = [];
+
         foreach ($this->livres as $livre) {
-            if (stripos($livre->getTitre(), $mot) !== false
-                || stripos($livre->getAuteur(), $mot) !== false) {
+            if (
+                stripos($livre->getTitre(), $mot) !== false
+                || stripos($livre->getAuteur(), $mot) !== false
+            ) {
                 $resultats[] = $livre;
             }
         }
+
         return $resultats;
     }
 }
